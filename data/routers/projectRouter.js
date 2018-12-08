@@ -76,9 +76,25 @@ router.put("/:id", (req, res) => {
         })
     }
 
+
+
 });
 
 
+router.get('/list/:id', (req, res) => {
+    const { id } = req.params
+    projects.get(id)
+        .then(project => {
+            projects
+                .getProjectActions(id)
+                .then(list => res.status(200).json(list))
+                .catch(err =>
+                    res.status(404).json({ error: "Not Found" }))
+        })
+        .catch(err => {
+            res.status(500).json({ error: "Can not find the projects information" })
+        })
+})
 
 
 
