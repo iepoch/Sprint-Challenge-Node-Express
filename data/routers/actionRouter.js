@@ -19,7 +19,7 @@ router.get("/:id", (req, res) => {
   actions
     .get(id)
     .then(action => {
-      action
+    action
         ? res.status(200).json(action)
         : res.status(400).json({ error: "The actions does not exist" });
     })
@@ -27,18 +27,18 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { project_id, description, notes } = req.body;
+const { project_id, description, notes } = req.body;
 
-  if ((project_id, description, notes)) {
+if ((project_id, description, notes)) {
     actions
-      .insert(req.body)
-      .then(action => res.status(201).json(action))
-      .catch(err => {
+    .insert(req.body)
+    .then(action => res.status(201).json(action))
+    .catch(err => {
         res.status(500).json({
-          error: "Error when adding the action"
+        error: "Error when adding the action"
         });
-      });
-  } else {
+    });
+} else {
     res
       .status(400)
       .json({ error: "Please add notes, description and project id." });
