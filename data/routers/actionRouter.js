@@ -19,7 +19,7 @@ router.get("/:id", (req, res) => {
   actions
     .get(id)
     .then(action => {
-    action
+      action
         ? res.status(200).json(action)
         : res.status(400).json({ error: "The actions does not exist" });
     })
@@ -27,18 +27,18 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-const { project_id, description, notes } = req.body;
+  const { project_id, description, notes } = req.body;
 
-if ((project_id, description, notes)) {
+  if ((project_id, description, notes) && description.length < 128) {
     actions
-    .insert(req.body)
-    .then(action => res.status(201).json(action))
-    .catch(err => {
+      .insert(req.body)
+      .then(action => res.status(201).json(action))
+      .catch(err => {
         res.status(500).json({
-        error: "Error when adding the action"
+          error: "Error when adding the action"
         });
-    });
-} else {
+      });
+  } else {
     res
       .status(400)
       .json({ error: "Please add notes, description and project id." });
@@ -66,28 +66,28 @@ router.delete("/:id", (req, res) => {
 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
-const { project_id, description, notes } = req.body;
+  const { project_id, description, notes } = req.body;
 
-    if (project_id, description, notes) {
-        actions.update(id, req.body)
-            .then(count => {
-                count ?
-                    actions
-                        .get(id)
-                        .then(action => {
-                            res.json(action)
-                        })
-                    :
-                    res.status(404).json({error: "The action specified id can not be found"})
+  if ((project_id, description, notes) && description.length < 128) {
+    actions
+      .update(id, req.body)
+      .then(count => {
+        count
+          ? actions.get(id).then(action => {
+              res.json(action);
             })
-            .catch(err => {
-                res.status(500).json({error: "Can not update the action"})
-            })
-    } else {
-        res.status(400).json({
-            error: "Please provide, notes, project id, and description"})
-    }
-
+          : res
+              .status(404)
+              .json({ error: "The action specified id can not be found" });
+      })
+      .catch(err => {
+        res.status(500).json({ error: "Can not update the action" });
+      });
+  } else {
+    res.status(400).json({
+      error: "Please provide, notes, project id, and description"
+    });
+  }
 });
 
 module.exports = router;
