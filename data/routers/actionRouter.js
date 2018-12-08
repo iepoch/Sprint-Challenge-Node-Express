@@ -41,7 +41,7 @@ router.post("/", (req, res) => {
   } else {
     res
       .status(400)
-      .json({ error: "Please add notes, description and project id." });
+        .json({ error: "Please add notes, description and project id. Or the description is too long must be under 128 characters" });
   }
 });
 
@@ -85,7 +85,7 @@ router.put("/:id", (req, res) => {
       });
   } else {
     res.status(400).json({
-      error: "Please provide, notes, project id, and description"
+      error: "Please provide, notes, project id, and description. Or the description is too long must be under 128 characters"
     });
   }
 });
